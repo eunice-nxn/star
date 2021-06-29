@@ -19,7 +19,7 @@ void cp_file(char* path, char* dest_path){
 	} else {
 		size_t result_r, result_w;
 		FILE *f_r, *f_w;
-		char buffer[1024];
+		char buffer[512];
 		f_r = fopen(path, "rb");
 		if( f_r == NULL ){
 			fputs ("File Open error",stderr); 
@@ -31,10 +31,9 @@ void cp_file(char* path, char* dest_path){
 			fputs ("File Open error",stderr);
 			exit (EXIT_FAILURE);
 		}  
-
 		while( !feof(f_r) ){
-			result_r = fread( buffer, 1024, 1, f_r);
-			fwrite( buffer, 1024, 1, f_w);
+			result_r = fread( buffer, sizeof(buffer), 1, f_r);
+			fwrite( buffer, sizeof(buffer), 1, f_w);
 		}	
 
 		status = chmod(dest_path, 0755);
@@ -74,7 +73,7 @@ void display_dir(char* origin_path, char* dest_path){
 	       	}
 		struct stat sf;
 		if( stat(path, &sf) == -1){
-			fputs("stat fail\n", stdeerr);
+			fputs("stat fail\n", stderr);
 			exit(1);
 		} else if( (sf.st_mode & S_IFMT) != S_IFLNK ){
 			if( (sf.st_mode & S_IFMT) == S_IFREG ){

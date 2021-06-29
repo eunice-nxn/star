@@ -4,27 +4,31 @@
 #include <dirent.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <dirent.h>
 
 char* new_archive = 0x0;
 
 typedef struct header{
 
-	int ftype;   /*0: directory, 1:regular file*/
-	unsigned int n; /*'n' length of file path | 4 bytes*/
-	unsigned int m; /*'m' length of data | 4 bytes*/
-	char* path; /*the file path | 'n' bytes*/
+	int ftype;   
+	unsigned int len_path; 
+	unsigned int len_data; 
+	char* path; 
 
 } Header;
 
-/**
- * It makes new header by reading file.
- * Input: the path of file to be written
- * Return: header
- * */
+
+void print_header (Header *header){
+
+
+	printf("ftype : %d\n length of the path : %u\n length of the file: %u\n path : %s\n",
+			header->ftype, header->len_path, header->len_data, header->path);
+
+
+}
 
 Header* make_header ( char* path, Header *header ){
 
-	// Determine file type 
 	struct stat sf;
 	stat(path, &sf);
 	if( (sf.st_mode & S_IFMT) == S_IFDIR ){
@@ -32,49 +36,106 @@ Header* make_header ( char* path, Header *header ){
 	} else if ((sf.st_mode & S_IFMT) == S_IFREG ){
 		header->ftype = 1;
 	}	
-	// Read len_path
-	size_t len_path = sizeof(path) / sizeof(char) ;
-	header->n = len_path;
+	size_t len_path = sizeof(path) ;
+	header->len_path = len_path;
 
-	// Read len_data
 	size_t len_data = sf.st_size;
-	header->m = len_data;
+	header->len_data = len_data;
 
-	// Store the path of file 
 	header->path = path;
 
 	return header;
 }
 
-/**
- * It writes star file by taking headers
- * argument: the header of file
- * Return: header
- * */
 void write_file( Header* header ){
 
-	FILE* fp;
-	fp = fopen(new_archive, "a");
-	if( fp == NULL ) {
+	FILE *fp_w, *fp_r;
+	fp_w = fopen(new_archive, "ab");
+	if( fp_w == NULL ) {
 		printf("Fail to open file stream");
 	}
 
-	int result = 0;
+	size_t result = 0;
 
-	fwrite( &header, sizeof(header), 1, fp);
-	fwrite( &header->ftype, 1, 1, fp);
-	fwrite( &header->n, 4, 1, fp);
-       	fwrite( &header->m, 4, 1, fp);
-	fwrite( &header->path, header->n, 1, fp);
+	result = fwrite( &header->ftype, 1, sizeof(header->ftype), fp_w);
+	printf("sizeof(header->ftype) : %lu | result : %lu \n", sizeof(header->ftype), result );
+	result = fwrite( &header->len_path, 1, sizeof(header->len_path), fp_w);
+	printf("sizeof(header->len_path) : %lu | result : %lu \n", sizeof(header->len_path), result );
+	result = fwrite( &header->len_data, 1, sizeof(header->len_data), fp_w);
+	printf("sizeof(header->len_data) : %lu | result : %lu \n", sizeof(header->len_data), result );
+	result = fwrite( &header->path, 1, sizeof(header->path), fp_w);
+	printf("sizeof(header->path) : %lu | result : %lu \n", sizeof(header->path), result );
 
+	fp_r = fopen(header->path, "rb");
+	if(fp_r == NULL){
+		printf("Fail to open file stream\n");
+	}
+	size_t result_r = 0;
+	char buffer[512] = { 0 };
+	while( !feof(fp_r) ){
+		result_r = fread(buffer, 1, 512, fp_r);
+		fwrite(buffer, 1, result_r, fp_w);
+		memset(buffer, 0, 512);
+	}
+
+	fclose(fp_r);
+	fclose(fp_w);
+}
+
+char* manipul_path (char* path, char* d_name){
+
+	int path_length;
+	char new_path[PATH_MAX];
+
+	path_length = snprintf(new_path, PATH_MAX, "%s/%s", path, d_name);
+
+	char* ptr = &new_path[0];
+	return ptr;
 }
 
 
+void retrieve_path (char* path){
 
+	DIR* dir = opendir(path);
+	struct dirent *ent;
+
+	
+	while( (ent = readdir(dir)) != NULL ){
+
+		if(strcmp(ent->d_name, ".") == 0){
+		 	continue;
+		}
+		if(strcmp(ent->d_name, "..") == 0){
+			continue;
+		}
+		if(ent->d_type == DT_LNK){
+			continue;
+		}
+		
+		char* new_path = manipul_path(path, ent->d_name);
+		printf("new_path : %s | path : %s \n", new_path, path);
+		Header *header = (Header*) malloc(sizeof(Header));
+        	header = make_header(new_path, header);
+		write_file(header);
+		free(header); 
+		
+		if(ent->d_type == DT_DIR){
+			retrieve_path(new_path);
+		}
+	}
+
+
+
+}
+
+void retrieve_header(char* archive){
+
+
+
+}
 int main(int argc, char* argv[]){
 
 	char* target_path= 0x0;
-	
 	
 	if( strcmp(argv[1], "archive") == 0 ){
 		
@@ -83,13 +144,11 @@ int main(int argc, char* argv[]){
 			printf("invalid argument.\n");
 		} 
 
-		/*argv[2] validation*/
 		if( access( argv[2], F_OK ) == 0 ){
 			printf("The file with that name exists. You should enter name of new file.\n");
 			exit(1);	
 		}
 
-		/*argv[3] validation*/
 		if( opendir (argv[3]) == NULL ){
                         printf("Can not open directory\n");
                         exit(1);
@@ -101,17 +160,14 @@ int main(int argc, char* argv[]){
 			exit(1);
 		}
 
-		printf("Hi\n");
 		if( ( sf.st_mode & S_IFMT ) == S_IFLNK ){
 			exit(1);
 		}		
+		
 		target_path = argv[3];
 		new_archive = argv[2];
-		// Declare new header
-        	Header *header = (Header*) malloc(sizeof(Header));
-		header = make_header(target_path, header);
-		write_file(header);	
-		free(header);
+		retrieve_path(target_path);
+	
 	} else if (strcmp(argv[1], "list") == 0){
 		
 		printf("list mode\n");
@@ -125,6 +181,8 @@ int main(int argc, char* argv[]){
                         exit(1);
                 }
 
+		new_archive = argv[2];
+
 	}else if (strcmp(argv[1], "extract") == 0){
 		
 		printf("extract mode\n");
@@ -132,7 +190,6 @@ int main(int argc, char* argv[]){
 			printf("invalid argument.\n");
 		}
 
-		/*argv[2] validation*/
 		if( access( argv[2], F_OK ) == -1 ){
                         printf("Invalid file\n");
                         exit(1);
