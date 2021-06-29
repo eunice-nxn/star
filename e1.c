@@ -66,9 +66,6 @@ void write_file( Header* header ){
 	fwrite( &header->n, 4, 1, fp);
        	fwrite( &header->m, 4, 1, fp);
 	fwrite( &header->path, header->n, 1, fp);
-	if( result == (int) sizeof(header) ){
-		printf(" result is identical to header size\n");
-	}
 
 }
 
