@@ -1,0 +1,39 @@
+CSEE
+HELLO
+WORLD
+EUNICE
+GITHUB
+A version of this story first appeared in CNN Business' Before the Bell newsletter. Not a subscriber? You can sign up right here.
+London (CNN Business)The news for Facebook (FB) couldn't have been better.
+
+What's happening: On Monday, a US judge dismissed two complaints that accused the company of holding a monopoly on social media — a major setback for regulators that are increasingly looking for ways to break up Silicon Valley's top players.
+Facebook's shares soared more than 4%, pushing the company's market value above $1 trillion for the first time.
+But CEO Mark Zuckerberg may want to hold off popping the champagne.
+The judge said the Federal Trade Commission did not do enough to back up its assertion that Facebook controls at least 60% of the social media market. The FTC had alleged that Facebook violated the nation's anti-monopoly laws by acquiring nascent startups like Instagram that it perceived as a threat to its dominance, and by preventing others from plugging into Facebook's services.
+However, the agency can still file an amended complaint. An FTC spokesperson said it's closely reviewing the decision.
+The dismissal may also serve to harden the resolve of US lawmakers, who are pursuing a parallel track to rein in Big Tech with new legislation.
+"The FTC should do everything it can to pursue its case against Facebook. But the ruling shows why our antitrust laws need to be updated after years of bad precedent," Sen. Amy Klobuchar, a Democrat, tweeted after the decision. "We can't meet the challenges of the modern digital economy with pared down agencies & limited legal tools."
+"Agreed," Rep. Ken Buck, a Republican, said in response.
+Plus, Facebook is still under the microscope outside its home country. Earlier this month, European regulators announced two separate antitrust investigations that will probe whether the social network's use of data gives it an unfair advantage in online advertising.
+Big picture: The dominant narrative for months has been that investors are brushing off regulatory risks to tech stocks. Clearly, looking at the bump Facebook got after the US judge's ruling, that's not entirely true.
+It's a reminder for investors to watch what's happening closely. Given Big Tech's clout — Facebook, Amazon, Apple, Alphabet and Microsoft now make up almost 23% of the market value of the S&P 500 — there could be big consequences if critical regulators ultimately find even limited success.
+"The temptation is to believe that tech will remain all powerful in a post-pandemic world. However, history cautions against this automatic assumption," JPMorgan strategists Jan Loeys and Shiny Kundu wrote in a note to clients late last week.
+Loeys and Kundu focus on the potential for the "start of a political movement against mega companies" that would likely center on Big Tech. If it gains traction, that could end the era of US stocks outperforming other regions market dominance, they warn.
+Is the 2020 US recession already over?
+America's Covid-induced recession has been painful. But it could also be short.
+The official arbiter, the National Bureau of Economic Research, hasn't said the downturn is over. Yet with upbeat signs in jobs, housing and stocks, investors and businesses are cheering a full-fledged recovery, my CNN Business colleague Paul R. La Monica reports.
+Watch this space: Some think this recession is a mirror image of the one in 1918, which was also sparked by a pandemic. That downturn, which aligned with the global influenza outbreak, lasted just seven months and was the second shortest on record.
+"We're not in a downturn anymore. Things are incredibly robust and it's almost a euphoria," said Ivan Kaufman, chairman and CEO of Arbor Realty Trust, a real estate firm that lends to apartment owners and commercial real estate firms.
+ClearBridge Investments has a recession risk dashboard that looks at a dozen economic indicators, including retail sales, housing, commodity prices, the job market and trucking shipments.
+Earlier this month, the money management firm said that most of these measures bottomed out in May 2020 and all 12 indicators are now flashing recovery signs.
+There are certainly pockets of the economy still far from pre-February 2020 levels, like small businesses, retail and restaurants. Concerns about inflation, and how the Federal Reserve will respond to higher prices, remain top of mind. And the jury is still out according to the NBER, which usually waits several months after a recession ends to declare its conclusion.
+To many, however, the Covid-19 recession is already a thing of the past.
+"Every recession is different and this is an unusual one. But the market has clearly moved on from the pandemic," said Matt Peron, director of research at Janus Henderson Investors.
+Federal Reserve officials aren't convinced that a digital US dollar is needed, even as Beijing tests a digital yuan and UK policymakers explore the prospect of a digital British pound.
+The latest: Randal Quarles, the Federal Reserve's vice chair for supervision, said Monday that any proposals to create a central bank digital currency, or CBDC, must clear a "high bar."
+"Before we get carried away with the novelty, I think we need to subject the promises of a CBDC to a careful critical analysis," he said at a Sun Valley banking convention.
+He noted that the US dollar is "already highly digitized."
+"The Federal Reserve provides a digital dollar to commercial banks, and commercial banks provide digital dollars and other financial services to consumers and businesses," Quarles said. "This arrangement serves the nation and the economy well."
+And he pushed back on the notion that the United States needs to act just because other countries could move first.
+"It seems unlikely ... that the dollar's status as a global reserve currency, or the dollar's role as the dominant currency in international financial transactions, will be threatened by a foreign CBDC," Quarles said, pointing to the strength of the US economy, reliance on the dollar for trade and in financial markets, and its stability over time.
+
