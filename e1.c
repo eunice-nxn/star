@@ -50,28 +50,32 @@ Header* make_header ( char* path, Header *header ){
 void write_file( Header* header ){
 
 	FILE *fp_w, *fp_r;
+	
 	fp_w = fopen(new_archive, "ab");
-	if( fp_w == NULL ) {
-		printf("Fail to open file stream");
-	}
-
-	size_t result = 0;
-
-	result = fwrite( &header->ftype, 1, sizeof(header->ftype), fp_w);
-	printf("sizeof(header->ftype) : %lu | result : %lu \n", sizeof(header->ftype), result );
-	result = fwrite( &header->len_path, 1, sizeof(header->len_path), fp_w);
-	printf("sizeof(header->len_path) : %lu | result : %lu \n", sizeof(header->len_path), result );
-	result = fwrite( &header->len_data, 1, sizeof(header->len_data), fp_w);
-	printf("sizeof(header->len_data) : %lu | result : %lu \n", sizeof(header->len_data), result );
-	result = fwrite( &header->path, 1, sizeof(header->path), fp_w);
-	printf("sizeof(header->path) : %lu | result : %lu \n", sizeof(header->path), result );
-
 	fp_r = fopen(header->path, "rb");
-	if(fp_r == NULL){
-		printf("Fail to open file stream\n");
+	
+	if( fp_w == NULL || fp_r == NULL ) {
+		printf("Fail to open file stream");
+		exit(1);
 	}
+
+	size_t result_w = 0;
 	size_t result_r = 0;
 	char buffer[512] = { 0 };
+
+	result_w = fwrite( &header->ftype, 1, sizeof(header->ftype), fp_w);
+	if ( result_w != sizeof(header->ftype) ) 
+		exit(1);
+	result_w = fwrite( &header->len_path, 1, sizeof(header->len_path), fp_w);
+	if ( result_w != sizeof(header->len_path) ) 
+		exit(1);
+	result_w = fwrite( &header->len_data, 1, sizeof(header->len_data), fp_w);
+	if ( result_w != sizeof(header->len_data) ) 
+                exit(1);
+	result_w = fwrite( &header->path, 1, sizeof(header->path), fp_w);
+	if ( result_w != sizeof(header->path) )
+                exit(1);
+
 	while( !feof(fp_r) ){
 		result_r = fread(buffer, 1, 512, fp_r);
 		fwrite(buffer, 1, result_r, fp_w);
@@ -113,7 +117,6 @@ void retrieve_path (char* path){
 		}
 		
 		char* new_path = manipul_path(path, ent->d_name);
-		printf("new_path : %s | path : %s \n", new_path, path);
 		Header *header = (Header*) malloc(sizeof(Header));
         	header = make_header(new_path, header);
 		write_file(header);
@@ -175,7 +178,6 @@ int main(int argc, char* argv[]){
 			printf("invalid argument.\n");
 		}
 
-		/*argv[2] validation*/
                 if( access (argv[2], R_OK) == -1 ){
                         printf("Can not read file\n");
                         exit(1);
